@@ -245,6 +245,16 @@ footer a:hover{color:var(--text)}
 .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
+/* SKELETON LOADERS */
+.skeleton-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem}
+.sk-line{height:10px;background:linear-gradient(90deg,var(--surface2) 25%,rgba(255,255,255,0.08) 50%,var(--surface2) 75%);background-size:200% 100%;border-radius:4px;margin-bottom:0.75rem;animation:skeleton 1.5s infinite}
+.sk-line.sk-title{height:16px;width:60%;margin-bottom:1rem;font-weight:600}
+.sk-line.sk-body{height:10px;width:100%;opacity:0.8}
+.sk-line.sk-body.short{width:70%;margin-bottom:0}
+.sk-chips{display:flex;gap:0.4rem;margin-top:0.75rem}
+.sk-chips::after,.sk-chips::before{content:'';width:50px;height:20px;background:var(--surface2);border-radius:100px;animation:skeleton 1.5s infinite}
+@keyframes skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
 /* CURSOR */
 .cursor{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:transform 0.05s}
 
@@ -397,7 +407,20 @@ footer a:hover{color:var(--text)}
         </div>
       </div>
     </div>
-    <div class="projects-secondary reveal">
+    <!-- Live GitHub repos grid — auto-updates when you push new repos -->
+    <div class="projects-secondary reveal" id="liveProjectsGrid">
+      <div class="project-mini skeleton-card" id="sk1"><div class="sk-line sk-title"></div><div class="sk-line sk-body"></div><div class="sk-line sk-body short"></div><div class="sk-chips"></div></div>
+      <div class="project-mini skeleton-card" id="sk2"><div class="sk-line sk-title"></div><div class="sk-line sk-body"></div><div class="sk-line sk-body short"></div><div class="sk-chips"></div></div>
+      <div class="project-mini skeleton-card" id="sk3"><div class="sk-line sk-title"></div><div class="sk-line sk-body"></div><div class="sk-line sk-body short"></div><div class="sk-chips"></div></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem" class="reveal">
+      <a href="https://github.com/GaneshanM16" target="_blank" rel="noopener" class="btn-secondary" style="display:inline-flex">
+        <svg width="16" height="16" viewBox="0 0 14 14" fill="currentColor"><path fill-rule="evenodd" d="M7 .5A6.5 6.5 0 0 0 .5 7c0 2.88 1.86 5.31 4.44 6.17.32.06.44-.14.44-.31v-1.09c-1.8.39-2.17-.87-2.17-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.52.71 1.89.54.06-.42.23-.71.42-.87-1.44-.16-2.95-.72-2.95-3.21 0-.71.25-1.29.67-1.74-.07-.16-.29-.82.06-1.72 0 0 .55-.18 1.8.67A6.23 6.23 0 0 1 7 3.87c.56 0 1.12.08 1.64.22 1.25-.85 1.8-.67 1.8-.67.35.9.13 1.56.06 1.72.42.45.67 1.03.67 1.74 0 2.5-1.52 3.05-2.96 3.21.23.2.44.59.44 1.19v1.76c0 .17.11.37.44.31A6.5 6.5 0 0 0 13.5 7 6.5 6.5 0 0 0 7 .5Z"/></svg>
+        View all repos on GitHub
+      </a>
+    </div>
+    <!-- OLD static cards kept as fallback data source (hidden) -->
+    <div style="display:none">
       <div class="project-mini">
         <div class="mini-icon">🎙️</div>
         <div class="mini-title">AI Voice Assistant</div>
@@ -832,6 +855,117 @@ function renderContribGrid(events) {
 }
 
 loadGitHub();
+
+// ── DYNAMIC PROJECTS (auto-fetch from GitHub) ──
+async function loadProjects() {
+  const username = "GaneshanM16";
+  const grid = document.getElementById("liveProjectsGrid");
+  
+  try {
+    // Fetch user's repos sorted by most recent
+    const res = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6&type=owner`, {
+      headers: { Accept: "application/vnd.github.v3+json" }
+    });
+    
+    if (!res.ok) throw new Error("Failed to fetch repos");
+    const repos = await res.json();
+    
+    // Clear skeleton loaders
+    grid.innerHTML = "";
+    
+    // Filter out portfolio repo and render the rest
+    repos
+      .filter(r => r.name !== "portfolio" && !r.fork) // Skip portfolio itself and forks
+      .slice(0, 6) // Show top 6
+      .forEach(repo => {
+        const card = document.createElement("div");
+        card.className = "project-mini";
+        card.style.animation = "fadeUp 0.6s ease forwards";
+        
+        // Get primary language color
+        const langColors = {
+          "Python": "#3572A5", "JavaScript": "#F7DF1E", "TypeScript": "#3178C6",
+          "Java": "#007396", "C#": "#239120", "HTML": "#E34C26", "CSS": "#563D7C",
+          "React": "#61DAFB", "FastAPI": "#009688", "Next.js": "#000000"
+        };
+        const langColor = langColors[repo.language] || "var(--accent)";
+        
+        // Extract key tech from description or language
+        const techStack = repo.language 
+          ? repo.language.split(/\s+/).filter(t => t).slice(0, 3)
+          : ["Repository"];
+        
+        const stars = repo.stargazers_count > 0 ? `⭐ ${repo.stargazers_count}` : "";
+        const topics = repo.topics?.slice(0, 3).map(t => `<span class="mini-tag">${t}</span>`).join("") || 
+                      (repo.language ? `<span class="mini-tag">${repo.language}</span>` : "");
+        
+        const updatedDate = new Date(repo.updated_at).toLocaleDateString("en-US", { 
+          month: "short", 
+          year: "2-digit" 
+        });
+        
+        card.innerHTML = `
+          <div class="mini-icon">${getRepoEmoji(repo.name)}</div>
+          <div class="mini-title">${repo.name}</div>
+          <div class="mini-desc">${repo.description || "A project by Ganeshan M"}</div>
+          <div class="mini-stack">${topics}</div>
+          <div class="mini-links">
+            <a href="${repo.html_url}" target="_blank" rel="noopener" class="mini-link">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor"><path fill-rule="evenodd" d="M7 .5A6.5 6.5 0 0 0 .5 7c0 2.88 1.86 5.31 4.44 6.17.32.06.44-.14.44-.31v-1.09c-1.8.39-2.17-.87-2.17-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.52.71 1.89.54.06-.42.23-.71.42-.87-1.44-.16-2.95-.72-2.95-3.21 0-.71.25-1.29.67-1.74-.07-.16-.29-.82.06-1.72 0 0 .55-.18 1.8.67A6.23 6.23 0 0 1 7 3.87c.56 0 1.12.08 1.64.22 1.25-.85 1.8-.67 1.8-.67.35.9.13 1.56.06 1.72.42.45.67 1.03.67 1.74 0 2.5-1.52 3.05-2.96 3.21.23.2.44.59.44 1.19v1.76c0 .17.11.37.44.31A6.5 6.5 0 0 0 13.5 7 6.5 6.5 0 0 0 7 .5Z"/></svg>
+              Code
+            </a>
+            ${stars ? `<span style="font-size:0.78rem;color:var(--text3)">${stars}</span>` : ""}
+            <span style="font-size:0.7rem;color:var(--text3)">${updatedDate}</span>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+  } catch (err) {
+    console.info("Projects API unavailable, showing static fallback");
+    // Show fallback projects
+    grid.innerHTML = `
+      <div class="project-mini">
+        <div class="mini-icon">💼</div>
+        <div class="mini-title">Career Copilot AI</div>
+        <div class="mini-desc">AI-powered resume optimization with ATS scoring and interview prep</div>
+        <div class="mini-stack"><span class="mini-tag">Python</span><span class="mini-tag">FastAPI</span><span class="mini-tag">Next.js</span></div>
+        <div class="mini-links">
+          <a href="https://github.com/GaneshanM16/career-copilot-ai" target="_blank" class="mini-link">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="currentColor"><path fill-rule="evenodd" d="M7 .5A6.5 6.5 0 0 0 .5 7c0 2.88 1.86 5.31 4.44 6.17.32.06.44-.14.44-.31v-1.09c-1.8.39-2.17-.87-2.17-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.52.71 1.89.54.06-.42.23-.71.42-.87-1.44-.16-2.95-.72-2.95-3.21 0-.71.25-1.29.67-1.74-.07-.16-.29-.82.06-1.72 0 0 .55-.18 1.8.67A6.23 6.23 0 0 1 7 3.87c.56 0 1.12.08 1.64.22 1.25-.85 1.8-.67 1.8-.67.35.9.13 1.56.06 1.72.42.45.67 1.03.67 1.74 0 2.5-1.52 3.05-2.96 3.21.23.2.44.59.44 1.19v1.76c0 .17.11.37.44.31A6.5 6.5 0 0 0 13.5 7 6.5 6.5 0 0 0 7 .5Z"/></svg>
+            Code
+          </a>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function getRepoEmoji(repoName) {
+  const emojiMap = {
+    "career-copilot-ai": "🤖",
+    "portfolio": "🌐",
+    "ai": "✨",
+    "voice": "🎙️",
+    "database": "🗄️",
+    "api": "⚡",
+    "web": "🌍",
+    "mobile": "📱",
+    "ml": "🧠",
+    "data": "📊",
+    "tool": "🛠️"
+  };
+  
+  for (const [keyword, emoji] of Object.entries(emojiMap)) {
+    if (repoName.toLowerCase().includes(keyword)) return emoji;
+  }
+  return "📦"; // default
+}
+
+// Load projects on page load
+window.addEventListener("load", () => {
+  setTimeout(loadProjects, 100); // Small delay to not block render
+});
 
 // ── CONTACT FORM (Formspree — free, no account needed shown in code) ──
 // To activate: create free account at formspree.io, get your form ID, replace YOUR_FORM_ID below
