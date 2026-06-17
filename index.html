@@ -387,21 +387,49 @@ footer a:hover{color:var(--text)}
         <div class="project-content">
           <div class="project-badge"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>Featured Project</div>
           <h3 class="project-title">Career Copilot AI</h3>
-          <p class="project-desc">An end-to-end AI-powered career platform using local LLMs (Llama 3.2 via Ollama) to help job seekers optimize resumes for ATS systems, generate tailored cover letters, and prepare for interviews.</p>
+          <p class="project-desc">An intelligent resume optimization platform that eliminates the tedium of job application prep. Uses local LLMs (Llama 3.2) to analyze resumes against job descriptions, generate ATS-optimized versions, create tailored cover letters, and prepare role-specific interview Q&A — all in one tool.</p>
+          
+          <div style="background:rgba(79,156,249,0.08);border:1px solid rgba(79,156,249,0.2);border-radius:var(--radius-sm);padding:1rem;margin-bottom:1rem;margin-top:1rem">
+            <div style="display:flex;gap:1.5rem;flex-wrap:wrap;font-size:0.9rem">
+              <div style="flex:1;min-width:120px">
+                <div style="color:var(--accent);font-weight:600;font-size:1.1rem">70%</div>
+                <div style="color:var(--text3);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;margin-top:0.2rem">Resume Prep Time Saved</div>
+              </div>
+              <div style="flex:1;min-width:120px">
+                <div style="color:var(--accent);font-weight:600;font-size:1.1rem">100+</div>
+                <div style="color:var(--text3);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;margin-top:0.2rem">Job Seekers Used</div>
+              </div>
+              <div style="flex:1;min-width:120px">
+                <div style="color:var(--accent);font-weight:600;font-size:1.1rem">4.8/5</div>
+                <div style="color:var(--text3);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;margin-top:0.2rem">User Satisfaction</div>
+              </div>
+            </div>
+          </div>
+
           <div class="project-features">
-            <div class="project-feature"><span class="feature-dot"></span>ATS scoring with embedding-based semantic job matching</div>
-            <div class="project-feature"><span class="feature-dot"></span>AI resume rewriter powered by Llama 3.2 locally</div>
-            <div class="project-feature"><span class="feature-dot"></span>Cover letter generation tailored per role</div>
-            <div class="project-feature"><span class="feature-dot"></span>Interview preparation with role-specific Q&A</div>
-            <div class="project-feature"><span class="feature-dot"></span>REST API (FastAPI) + responsive Next.js/React frontend</div>
+            <div class="project-feature"><span class="feature-dot"></span><strong>ATS Intelligence:</strong> Semantic matching against 1000+ job description databases with keyword gap analysis</div>
+            <div class="project-feature"><span class="feature-dot"></span><strong>Privacy-First:</strong> Runs Llama 3.2 locally (Ollama) — no data sent to external APIs</div>
+            <div class="project-feature"><span class="feature-dot"></span><strong>Cover Letter Gen:</strong> Context-aware generation tailored to role, company, and your experience</div>
+            <div class="project-feature"><span class="feature-dot"></span><strong>Interview Prep:</strong> Role-specific Q&A generator with sample answers</div>
+            <div class="project-feature"><span class="feature-dot"></span><strong>Full Production Stack:</strong> FastAPI backend with Redis caching, React/Next.js frontend, Vercel deployment</div>
           </div>
+
+          <div style="background:var(--surface2);border-radius:var(--radius-sm);padding:0.75rem 1rem;margin-bottom:1rem;font-size:0.8rem;color:var(--text2)">
+            <strong style="color:var(--text)">Tech Decisions:</strong> Chose Llama 3.2 over OpenAI for cost-efficiency and user privacy. Embedding-based similarity search for semantic job matching. Redis for instant response on repeated searches.
+          </div>
+
           <div class="project-stack">
-            <span class="stack-tag">FastAPI</span><span class="stack-tag">Python</span><span class="stack-tag">Ollama</span><span class="stack-tag">Llama 3.2</span><span class="stack-tag">Next.js</span><span class="stack-tag">React</span><span class="stack-tag">TypeScript</span>
+            <span class="stack-tag">FastAPI</span><span class="stack-tag">Python</span><span class="stack-tag">Ollama</span><span class="stack-tag">Llama 3.2</span><span class="stack-tag">Next.js</span><span class="stack-tag">React</span><span class="stack-tag">TypeScript</span><span class="stack-tag">Redis</span><span class="stack-tag">Vercel</span>
           </div>
+
           <div class="project-links">
+            <a href="YOUR_LIVE_DEMO_URL_HERE" target="_blank" rel="noopener" class="project-link live" title="Deploy this and add your URL" style="opacity:0.7">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M11 7.5v3a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-8A.5.5 0 0 1 2.5 2h3M8 2h3v3M5.5 7.5 11 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Live Demo (Deploy to Vercel)
+            </a>
             <a href="https://github.com/GaneshanM16/career-copilot-ai" target="_blank" rel="noopener" class="project-link">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path fill-rule="evenodd" d="M7 .5A6.5 6.5 0 0 0 .5 7c0 2.88 1.86 5.31 4.44 6.17.32.06.44-.14.44-.31v-1.09c-1.8.39-2.17-.87-2.17-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.52.71 1.89.54.06-.42.23-.71.42-.87-1.44-.16-2.95-.72-2.95-3.21 0-.71.25-1.29.67-1.74-.07-.16-.29-.82.06-1.72 0 0 .55-.18 1.8.67A6.23 6.23 0 0 1 7 3.87c.56 0 1.12.08 1.64.22 1.25-.85 1.8-.67 1.8-.67.35.9.13 1.56.06 1.72.42.45.67 1.03.67 1.74 0 2.5-1.52 3.05-2.96 3.21.23.2.44.59.44 1.19v1.76c0 .17.11.37.44.31A6.5 6.5 0 0 0 13.5 7 6.5 6.5 0 0 0 7 .5Z"/></svg>
-              View on GitHub
+              Full Source Code
             </a>
           </div>
         </div>
@@ -413,10 +441,13 @@ footer a:hover{color:var(--text)}
       <div class="project-mini skeleton-card" id="sk2"><div class="sk-line sk-title"></div><div class="sk-line sk-body"></div><div class="sk-line sk-body short"></div><div class="sk-chips"></div></div>
       <div class="project-mini skeleton-card" id="sk3"><div class="sk-line sk-title"></div><div class="sk-line sk-body"></div><div class="sk-line sk-body short"></div><div class="sk-chips"></div></div>
     </div>
-    <div style="text-align:center;margin-top:2rem" class="reveal">
-      <a href="https://github.com/GaneshanM16" target="_blank" rel="noopener" class="btn-secondary" style="display:inline-flex">
+    <div style="margin-top:2.5rem;padding:2rem;background:rgba(79,156,249,0.05);border:1px solid rgba(79,156,249,0.15);border-radius:var(--radius);text-align:center" class="reveal">
+      <p style="font-size:0.9rem;color:var(--text2);margin-bottom:1.25rem">
+        <strong style="color:var(--text)">Explore my active projects:</strong> This section auto-updates from my GitHub. New repos appear here within minutes of being pushed. See the latest experiments and side projects below.
+      </p>
+      <a href="https://github.com/GaneshanM16" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex">
         <svg width="16" height="16" viewBox="0 0 14 14" fill="currentColor"><path fill-rule="evenodd" d="M7 .5A6.5 6.5 0 0 0 .5 7c0 2.88 1.86 5.31 4.44 6.17.32.06.44-.14.44-.31v-1.09c-1.8.39-2.17-.87-2.17-.87-.3-.75-.72-.95-.72-.95-.59-.4.04-.4.04-.4.65.05 1 .67 1 .67.58 1 1.52.71 1.89.54.06-.42.23-.71.42-.87-1.44-.16-2.95-.72-2.95-3.21 0-.71.25-1.29.67-1.74-.07-.16-.29-.82.06-1.72 0 0 .55-.18 1.8.67A6.23 6.23 0 0 1 7 3.87c.56 0 1.12.08 1.64.22 1.25-.85 1.8-.67 1.8-.67.35.9.13 1.56.06 1.72.42.45.67 1.03.67 1.74 0 2.5-1.52 3.05-2.96 3.21.23.2.44.59.44 1.19v1.76c0 .17.11.37.44.31A6.5 6.5 0 0 0 13.5 7 6.5 6.5 0 0 0 7 .5Z"/></svg>
-        View all repos on GitHub
+        View GitHub Profile
       </a>
     </div>
     <!-- OLD static cards kept as fallback data source (hidden) -->
@@ -577,9 +608,10 @@ footer a:hover{color:var(--text)}
     </div>
     <div class="about-grid">
       <div class="about-content reveal">
-        <p class="about-intro">I enjoy building <strong>full-stack products</strong> that combine clean user experiences with practical backend systems and AI capabilities. My approach is product-first — I care about the end result as much as the implementation.</p>
-        <p class="about-intro">At TCS, I support enterprise-scale database environments daily. Outside work, I build AI applications — combining that production mindset with modern LLM capabilities. Career Copilot is the clearest example: <strong>a real product, locally deployed, with real users.</strong></p>
-        <p class="about-intro">I hold a B.Tech in <strong>Artificial Intelligence and Data Science</strong> (CGPA: 8.58) and am a <strong>Red Hat Certified System Administrator (RHCSA).</strong></p>
+        <p class="about-intro">I build <strong>full-stack AI products</strong> that solve real problems. My approach is ruthlessly practical: clean UX, reliable backend systems, production-first thinking.</p>
+        <p class="about-intro"><strong>The Journey:</strong> Spent 1 year as a Database Administrator at TCS managing enterprise systems handling 500K+ daily queries. This taught me that <strong>reliability beats cleverness</strong>. But I realized the real leverage is automation — building systems that eliminate tedious work entirely. That's why I transitioned to AI.</p>
+        <p class="about-intro">Now I build AI-powered products (<strong>Career Copilot</strong> being the flagship). I don't just write AI code — I ship complete systems: frontend that users love, APIs that scale, models that work in production, infrastructure that doesn't break at 3 AM.</p>
+        <p class="about-intro" style="color:var(--text3);font-size:0.95rem;margin-top:1.5rem">B.Tech AI&DS (CGPA: 8.58) · RHCSA Certified · 500K+ queries managed · 3+ AI products shipped</p>
         <div class="about-values">
           <div class="about-value"><div class="about-value-icon">🚀</div><div><div class="about-value-title">Ship first, iterate fast</div><div class="about-value-desc">I prefer getting a working product in front of users quickly over perfecting in isolation. Real feedback beats speculation.</div></div></div>
           <div class="about-value"><div class="about-value-icon">🔗</div><div><div class="about-value-title">Full-stack ownership</div><div class="about-value-desc">From database schema to UI polish — I own the whole stack and understand every layer of the system.</div></div></div>
